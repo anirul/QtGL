@@ -95,9 +95,6 @@ void OpenGLWindow::renderNow()
 
     if (m_animating)
         renderLater();
-
-    glFlush();
-    glFinish();
 }
 
 void OpenGLWindow::setAnimating(bool animating)
