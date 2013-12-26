@@ -10,3 +10,4 @@ INCLUDEPATH += .
 HEADERS += opengl_window.h triangle_window.h
 SOURCES += main.cpp opengl_window.cpp triangle_window.cpp
 QT += widgets
+RESOURCES = QtMars.qrc
