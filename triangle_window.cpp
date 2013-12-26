@@ -1,6 +1,8 @@
 #include "opengl_window.h"
 #include "triangle_window.h"
 #include <QScreen>
+#include <QApplication>
+#include <iostream>
 
 TriangleWindow::TriangleWindow()
     : m_program(0)
@@ -18,8 +20,13 @@ GLuint TriangleWindow::loadShader(GLenum type, const char *source) {
 void TriangleWindow::initialize()
 {
     m_program = new QOpenGLShaderProgram(this);
-    m_program->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/triangle.vsh");
-    m_program->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/triangle.fsh");
+    std::cout << QCoreApplication::applicationDirPath().toStdString() << std::endl;
+    m_program->addShaderFromSourceFile(
+	QOpenGLShader::Vertex, 
+	QCoreApplication::applicationDirPath() + "/../Resources/triangle.vsh");
+    m_program->addShaderFromSourceFile(
+	QOpenGLShader::Fragment, 
+	QCoreApplication::applicationDirPath() + "/../Resources/triangle.fsh");
     m_program->link();
     m_posAttr = m_program->attributeLocation("posAttr");
     m_colAttr = m_program->attributeLocation("colAttr");

@@ -10,4 +10,6 @@ INCLUDEPATH += .
 HEADERS += opengl_window.h triangle_window.h
 SOURCES += main.cpp opengl_window.cpp triangle_window.cpp
 QT += widgets
-RESOURCES = QtMars.qrc
+APP_SHADER_FILES.files = triangle.vsh triangle.fsh
+APP_SHADER_FILES.path = Contents/Resources
+QMAKE_BUNDLE_DATA += APP_SHADER_FILES
