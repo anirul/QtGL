@@ -22,8 +22,10 @@ int main(int argc, char *argv[])
     format.setSamples(4);
 
     format.setRenderableType(QSurfaceFormat::OpenGL);
-//    format.setMajorVersion(3);
-//    format.setMinorVersion(2);
+#ifdef Q_OS_MAC
+    format.setMajorVersion(3);
+    format.setMinorVersion(2);
+#endif
     format.setProfile(QSurfaceFormat::CoreProfile);
     
     TriangleWindow window;

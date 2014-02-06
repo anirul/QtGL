@@ -14,7 +14,7 @@ public:
 
 private:
     QOpenGLShaderProgram* m_program;
-    QOpenGLBuffer* m_vertex_buffer;
+    GLuint vaoHandle;
     int m_frame;
 };
 
