@@ -2,6 +2,7 @@
 #define TRIANGLE_WINDOW_HEADER_DEFINED
 
 #include <QOpenGLShaderProgram>
+#include <QOpenGLBuffer>
 
 class TriangleWindow : public OpenGLWindow
 {
@@ -12,13 +13,8 @@ public:
     void render();
 
 private:
-    GLuint loadShader(GLenum type, const char *source);
-
-    GLuint m_posAttr;
-    GLuint m_colAttr;
-    GLuint m_matrixUniform;
-
-    QOpenGLShaderProgram *m_program;
+    QOpenGLShaderProgram* m_program;
+    QOpenGLBuffer* m_vertex_buffer;
     int m_frame;
 };
 

@@ -1,6 +1,3 @@
-#ifdef WIN32
-#include <cstdint>
-#endif
 #include <iostream>
 
 #include <QPainter>
@@ -29,8 +26,12 @@ void OpenGLWindow::initialize() {}
 void OpenGLWindow::render() {
     if (!m_device)
         m_device = new QOpenGLPaintDevice;
+
+    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
     m_device->setSize(size());
+
     QPainter painter(m_device);
     render(&painter);
 }

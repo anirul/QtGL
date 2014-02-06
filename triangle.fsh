@@ -1,8 +1,8 @@
-#version 140
-in vec3 col;
-out vec3 FragColor;
+#version 130
+
+out vec4 fragColor;
 
 void main(void)
 {
-    FragColor = col;
+    fragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

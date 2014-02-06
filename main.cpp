@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QSurfaceFormat format;
     format.setSamples(4);
-    // OpenGL desktop (may not work under Windows)
+
     format.setRenderableType(QSurfaceFormat::OpenGL);
-    format.setMajorVersion(3);
-    format.setMinorVersion(2);
+//    format.setMajorVersion(3);
+//    format.setMinorVersion(2);
     format.setProfile(QSurfaceFormat::CoreProfile);
     
     TriangleWindow window;

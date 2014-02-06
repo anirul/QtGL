@@ -25,7 +25,7 @@ win32 {
 # Input
 HEADERS += opengl_window.h triangle_window.h mola_data.hpp
 SOURCES += main.cpp opengl_window.cpp triangle_window.cpp
-QT += widgets
+QT += widgets opengl
 
 macx {
     APP_SHADER_FILES.files = triangle.vsh triangle.fsh
