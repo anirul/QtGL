@@ -35,20 +35,20 @@ void TriangleWindow::initialize()
     std::cout << QCoreApplication::applicationDirPath().toStdString() << std::endl;
     std::cout << (const char*)glGetString(GL_VERSION) << std::endl;
 #ifdef Q_OS_MAC
-    QString ressourcePath = QCoreApplication::applicationDirPath() + "/../Resources/";
+    QString resourcePath = QCoreApplication::applicationDirPath() + "/../Resources/";
 #else
-    QString ressourcePath = ":/";
+    QString resourcePath = ":/";
 #endif
     if (!m_program->addShaderFromSourceFile(
         QOpenGLShader::Vertex,
-        ressourcePath + "triangle.vsh"))
+        resourcePath + "triangle.vsh"))
     {
         std::cerr << m_program->log().toStdString() << std::endl;
         throw std::runtime_error("Error in compiling vertex shader!");
     }
     if (!m_program->addShaderFromSourceFile(
         QOpenGLShader::Fragment,
-        ressourcePath + "triangle.fsh"))
+        resourcePath + "triangle.fsh"))
     {
         std::cerr << m_program->log().toStdString() << std::endl;
         throw std::runtime_error("Error in compiling fragment shader!");
