@@ -4,6 +4,7 @@
 #include <string>
 #include <algorithm>
 #include <stdexcept>
+#include <cstdint>
 
 #include "opengl_window.h"
 #include "triangle_window.h"

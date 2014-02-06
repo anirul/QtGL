@@ -1,7 +1,10 @@
-#include "opengl_window.h"
+#include <cstdint>
 #include <iostream>
+
 #include <QPainter>
 #include <QCoreApplication>
+
+#include "opengl_window.h"
 
 OpenGLWindow::OpenGLWindow(QWindow *parent)
     : QWindow(parent)
