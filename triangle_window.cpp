@@ -34,13 +34,28 @@ void TriangleWindow::initialize()
     m_program = new QOpenGLShaderProgram(this);
     std::cout << QCoreApplication::applicationDirPath().toStdString() << std::endl;
     std::cout << (const char*)glGetString(GL_VERSION) << std::endl;
-    m_program->addShaderFromSourceFile(
-	QOpenGLShader::Vertex, 
-	QCoreApplication::applicationDirPath() + "/../Resources/triangle.vsh");
-    m_program->addShaderFromSourceFile(
-	QOpenGLShader::Fragment, 
-	QCoreApplication::applicationDirPath() + "/../Resources/triangle.fsh");
-    m_program->link();
+    QString ressourcePath = ":/";
+#ifdef Q_OS_MAC
+    QString ressourcePath = QCoreApplication::applicationDirPath() + "/../Resources/";
+#endif
+    if (!m_program->addShaderFromSourceFile(
+        QOpenGLShader::Vertex,
+        ressourcePath + "triangle.vsh"))
+    {
+        std::cerr << m_program->log().toStdString() << std::endl;
+        throw std::runtime_error("Error in compiling vertex shader!");
+    }
+    if (!m_program->addShaderFromSourceFile(
+        QOpenGLShader::Fragment,
+        ressourcePath + "triangle.fsh"))
+    {
+        std::cerr << m_program->log().toStdString() << std::endl;
+        throw std::runtime_error("Error in compiling fragment shader!");
+    }
+    if (!m_program->link()) {
+        std::cerr << m_program->log().toStdString() << std::endl;
+        throw std::runtime_error("Error linking program shader!");
+    }
     m_posAttr = m_program->attributeLocation("posAttr");
     m_colAttr = m_program->attributeLocation("colAttr");
     m_matrixUniform = m_program->uniformLocation("matrix");
@@ -57,9 +72,9 @@ void TriangleWindow::render()
     m_program->bind();
 
     QMatrix4x4 matrix;
-    matrix.perspective(60, 4.0/3.0, 0.1, 100.0);
-    matrix.translate(0, 0, -2);
-    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0, 1, 0);
+    matrix.perspective(60.0f, 4.0f/3.0f, 0.1f, 100.0f);
+    matrix.translate(0.0f, 0.0f, -2.0f);
+    matrix.rotate(100.0f * m_frame / screen()->refreshRate(), 0.0f, 1.0f, 0.0f);
 
     m_program->setUniformValue(m_matrixUniform, matrix);
 
