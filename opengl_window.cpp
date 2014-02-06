@@ -1,4 +1,6 @@
+#ifdef WIN32
 #include <cstdint>
+#endif
 #include <iostream>
 
 #include <QPainter>
