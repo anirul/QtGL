@@ -34,9 +34,10 @@ void TriangleWindow::initialize()
     m_program = new QOpenGLShaderProgram(this);
     std::cout << QCoreApplication::applicationDirPath().toStdString() << std::endl;
     std::cout << (const char*)glGetString(GL_VERSION) << std::endl;
-    QString ressourcePath = ":/";
 #ifdef Q_OS_MAC
     QString ressourcePath = QCoreApplication::applicationDirPath() + "/../Resources/";
+#else
+    QString ressourcePath = ":/";
 #endif
     if (!m_program->addShaderFromSourceFile(
         QOpenGLShader::Vertex,
