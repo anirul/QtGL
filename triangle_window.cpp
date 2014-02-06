@@ -18,15 +18,26 @@
 
 TriangleWindow::TriangleWindow()
     : m_program(0)
+    , m_position_buffer(0)
+    , m_color_buffer(0)
+    , m_vertex_array(0)
     , m_frame(0)
 {
-    vaoHandle = 0;
+}
+
+TriangleWindow::~TriangleWindow() {
+    if (m_program) delete m_program;
+    if (m_position_buffer) delete m_position_buffer;
+    if (m_color_buffer) delete m_color_buffer;
+    if (m_vertex_array) delete m_vertex_array;
 }
 
 void TriangleWindow::initialize()
 {
-    GLuint vboHandles[2];
     m_program = new QOpenGLShaderProgram(this);
+    m_position_buffer = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+    m_color_buffer = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+    m_vertex_array = new QOpenGLVertexArrayObject(this);
     std::cout << QCoreApplication::applicationDirPath().toStdString() << std::endl;
     std::cout << (const char*)glGetString(GL_VERSION) << std::endl;
 #ifdef Q_OS_MAC
@@ -63,27 +74,27 @@ void TriangleWindow::initialize()
 	0.0f, 1.0f, 0.0f,
 	0.0f, 0.0f, 1.0f
     };
-    glGenBuffers(2, vboHandles);
-    GLuint positionBufferHandle = vboHandles[0];
-    GLuint colorBufferHandle = vboHandles[1];
 
-    glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
-    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), points, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
-    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), colors, GL_STATIC_DRAW);
-
-    glGenVertexArrays(1, &vaoHandle);
-    glBindVertexArray(vaoHandle);
+    m_position_buffer->create();
+    m_position_buffer->bind();
+    m_position_buffer->allocate(points, 9 * sizeof(float));
     
+    m_color_buffer->create();
+    m_color_buffer->bind();
+    m_color_buffer->allocate(colors, 9 * sizeof(float));
+
+    m_vertex_array->create();
+    m_vertex_array->bind();
+
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
 
-    glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
+    glBindBuffer(GL_ARRAY_BUFFER, m_position_buffer->bufferId());
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     
-    glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
+    glBindBuffer(GL_ARRAY_BUFFER, m_color_buffer->bufferId());
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
 }
 
 void TriangleWindow::render()
@@ -97,10 +108,11 @@ void TriangleWindow::render()
         std::cerr << m_program->log().toStdString() << std::endl;
         throw std::runtime_error("Error could not bind shader!");
     }
+    m_vertex_array->bind();
 
-    glBindVertexArray(vaoHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
+    m_vertex_array->release();
     m_program->release();
 
     ++m_frame;
