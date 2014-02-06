@@ -1,5 +1,6 @@
-varying lowp vec4 col;
+varying vec4 col;
 
-void main() {
-   gl_FragColor = col;
+void main(void)
+{
+    gl_FragColor = col;
 }
