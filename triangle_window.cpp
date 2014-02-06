@@ -1,5 +1,14 @@
+#include <assert.h>
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <stdexcept>
+
 #include "opengl_window.h"
 #include "triangle_window.h"
+#include "mola_data.hpp"
+
 #include <QScreen>
 #include <QApplication>
 #include <iostream>
@@ -21,6 +30,7 @@ void TriangleWindow::initialize()
 {
     m_program = new QOpenGLShaderProgram(this);
     std::cout << QCoreApplication::applicationDirPath().toStdString() << std::endl;
+    std::cout << (const char*)glGetString(GL_VERSION) << std::endl;
     m_program->addShaderFromSourceFile(
 	QOpenGLShader::Vertex, 
 	QCoreApplication::applicationDirPath() + "/../Resources/triangle.vsh");
