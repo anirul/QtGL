@@ -3,6 +3,8 @@
 #include <QPainter>
 #include <QCoreApplication>
 
+#include <QOpenGLFunctions>
+
 #include "opengl_window.h"
 
 OpenGLWindow::OpenGLWindow(QWindow *parent)
@@ -21,7 +23,8 @@ void OpenGLWindow::render(QPainter* painter) {
     Q_UNUSED(painter);
 }
 
-void OpenGLWindow::initialize() {}
+void OpenGLWindow::initialize() {
+}
 
 void OpenGLWindow::render() {
     if (!m_device)

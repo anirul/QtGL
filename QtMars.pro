@@ -19,13 +19,13 @@ linux-g++ {
 }
 
 win32 {
-   message(TODO)
+
 }
 
 # Input
 HEADERS += opengl_window.h triangle_window.h mola_data.hpp
 SOURCES += main.cpp opengl_window.cpp triangle_window.cpp
-QT += widgets opengl
+QT += core gui widgets opengl
 
 macx {
     APP_SHADER_FILES.files = triangle.vsh triangle.fsh
